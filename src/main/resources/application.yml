@@ -1,0 +1,31 @@
+server:
+  port: 3010
+
+spring:
+  application:
+    name: AbstractProject
+  datasource:
+    url: jdbc:postgresql://localhost:5435/abstractproject
+    username: Wassem
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wasee.tenbakji@gmail.com  # Replace with your actual Gmail address
+    password: uphkmwhxuoapuuwi  # Replace with your actual Gmail password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true  # This is the correct property name for enabling TLS
