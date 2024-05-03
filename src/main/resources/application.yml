@@ -3,21 +3,25 @@ server:
 
 spring:
   application:
-    name: AbstractProject
+    name: ProjectsManagementSystem
   datasource:
-    url: jdbc:postgresql://localhost:5435/abstractproject
+    url: jdbc:postgresql://localhost:5435/projects_management_system
     username: Wassem
     password: password
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     defer-datasource-initialization: true
     properties:
 #      hibernate:
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        jdbc.lob.non_contextual_creation: true
     show-sql: true
+#    jackson:
+#      serialization:
+#        fail-on-empty-beans: false
   mail:
     host: smtp.gmail.com
     port: 587

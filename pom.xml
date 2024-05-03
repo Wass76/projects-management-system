@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>Abstract-Project</artifactId>
+	<artifactId>ProjectsManagementSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Abstract-Project</name>
 	<description>Abstract project for security, swagger and mail services</description>

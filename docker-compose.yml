@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres:latest
-    container_name: abstractdemo
+    container_name: projects-management-system
     environment:
         POSTGRES_USER: Wassem
         POSTGRES_PASSWORD: password
