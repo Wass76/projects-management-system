@@ -1,5 +1,6 @@
 package com.ProjectsManagementSystem.user;
 
+import com.ProjectsManagementSystem.project.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
@@ -44,6 +46,15 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private Integer restorationCode;
+
+    @Column(unique = true)
+    private String token = null;
+
+    @ManyToMany
+    @JoinTable(name = "project_membership",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private Collection<Project> projects = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

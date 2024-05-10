@@ -1,21 +1,19 @@
 package com.ProjectsManagementSystem.auth;
 
 import com.ProjectsManagementSystem.mail.MailService;
-import com.ProjectsManagementSystem.mail.MailStructure;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 @Tag(name = "Authentication")
-public class AuthenticationContoller {
+public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final MailService mailService;
@@ -37,17 +35,19 @@ public class AuthenticationContoller {
        return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ){
-       return ResponseEntity.ok(authenticationService.authenticate(request));
+       return authenticationService.authenticate(request);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<AuthenticationResponse> logout(
-            @RequestBody AuthenticationRequest request
+    @PutMapping("/logout")
+    public ResponseEntity<String> logout(
+            Principal principal
     ){
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+//        System.out.println("Logging out");
+        return authenticationService.logout(principal
+        );
     }
 }

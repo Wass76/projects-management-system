@@ -1,14 +1,18 @@
 package com.ProjectsManagementSystem.bug;
 
+import com.ProjectsManagementSystem.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipal;
+import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
 
@@ -73,7 +77,11 @@ public class BugController {
             }
     )
     @PutMapping("{id}")
-    public ResponseEntity<Bug> update(@RequestBody BugRequest request, @PathVariable Integer id) {
+    public ResponseEntity<Bug> update(
+            @RequestBody BugRequest request,
+            @PathVariable Integer id,
+            Principal connectedUser
+    ){
         return bugService.update(id,request);
     }
     @Operation(
@@ -103,5 +111,10 @@ public class BugController {
     @GetMapping("bugs-by-task/{taskId}")
     public ResponseEntity<List<Bug>> getBugsByTask(@PathVariable("taskId") Integer taskId) {
         return bugService.findByTaskId(taskId);
+    }
+
+    @PutMapping("bug-reaction/{id}")
+    public ResponseEntity<Bug> react(@PathVariable Integer id ,Integer react) {
+        return bugService.reactById(id,react);
     }
 }

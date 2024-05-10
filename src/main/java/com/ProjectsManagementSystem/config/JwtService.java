@@ -1,5 +1,8 @@
 package com.ProjectsManagementSystem.config;
 
+import com.ProjectsManagementSystem.exception.ApiInvalidTokenException;
+import com.ProjectsManagementSystem.user.Token;
+import com.ProjectsManagementSystem.user.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,6 +21,11 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "7402bb3c24c35f15d1a7f1422078d9c1a4d9ebf1a276ff01ac84e6407625532e";
+    private final TokenRepository tokenRepository;
+
+    public JwtService(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
@@ -42,7 +50,12 @@ public class JwtService {
 
     public boolean isTokenValid(String token , UserDetails userDetails){
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+//        Token token1 = tokenRepository.findByToken(token).orElse(null);
+        boolean isValid = (username.equals(userDetails.getUsername())) && !isTokenExpired(token)
+//                && token1 != null
+                ;
+        //            throw new ApiInvalidTokenException("token is invalid");
+        return isValid;
     }
 
     private boolean isTokenExpired(String token) {
@@ -64,6 +77,8 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);

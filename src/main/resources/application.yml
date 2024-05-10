@@ -3,6 +3,9 @@ server:
     accesslog:
       enabled: true
 
+#server:
+#  port: 3010
+
 spring:
   application:
     name: ProjectsManagementSystem
@@ -10,10 +13,14 @@ spring:
     url: jdbc:postgresql://dpg-coq9m1cf7o1s73edl940-a.oregon-postgres.render.com/projects_management_sysyem_stage_1
     username: wassem
     password: nBJfjmaNObLlPxx6nbefvuw1r1xBclOl
+#    url: jdbc:postgresql://localhost:5435/projects_management_system
+#    username: Wassem
+#    password: password
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+
     defer-datasource-initialization: true
     properties:
       hibernate:

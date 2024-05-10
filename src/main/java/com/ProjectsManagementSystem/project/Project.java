@@ -1,6 +1,7 @@
 package com.ProjectsManagementSystem.project;
 
 import com.ProjectsManagementSystem.task.Task;
+import com.ProjectsManagementSystem.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -43,6 +45,10 @@ public class Project {
     @JsonIgnore
     private List<Task> tasks;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "projects")
+    private List<User> members = new ArrayList<>();
+
     @CreatedDate
     @Column(
             nullable = false,
@@ -52,7 +58,7 @@ public class Project {
 
     @LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime lastModified;
+        private LocalDateTime lastModified;
 
     @CreatedBy
     @Column(

@@ -16,14 +16,14 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         name = "Wassem Tenbakji" ,
                         email = "wasee.tenbakji@gmail.com"
                 ),
-                description = "open api documentation for Spring Security",
-                title = " OpenApi Swagger Demo",
-                version = "1.0",
+                description = "open api documentation for Projects-Management-System",
+                title = "Projects Management System",
+                version = "2.0",
                 license = @License(
                         name = "Some License",
                         url = "https://some-url.com"
-                ),
-                termsOfService = "Term of my Service"
+                )
+//                termsOfService = "Term of my Service"
         ),
         servers =
                 {

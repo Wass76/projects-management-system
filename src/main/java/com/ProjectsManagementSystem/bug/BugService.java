@@ -4,10 +4,13 @@ import com.ProjectsManagementSystem.exception.ApiRequestException;
 import com.ProjectsManagementSystem.task.Task;
 import com.ProjectsManagementSystem.task.TaskRepository;
 import com.ProjectsManagementSystem.task.TaskService;
+import com.ProjectsManagementSystem.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -44,11 +47,12 @@ public class BugService {
                 .build();
         return ResponseEntity.ok(bugRespository.save(newBug)) ;
     }
-    public void delete(Bug bug) {
-        bugRespository.delete(bug);
-    }
 
-    public ResponseEntity<Bug> update(Integer id, BugRequest request) {
+    public ResponseEntity<Bug> update(
+            Integer id,
+            BugRequest request
+//            Principal connectedUser
+    ) {
         try {
             if(request.getTitle() == null || request.getTitle().isEmpty()) {
                 throw new ApiRequestException("Title is required");
@@ -60,6 +64,11 @@ public class BugService {
                 throw new ApiRequestException("Priority is required");
             }
             Bug updatedBug = bugRespository.findById(id).get();
+
+//            var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+//            if(user.getId().equals(updatedBug.get))
+
+
             if(request.getPriority() == 0) {
                 Integer bugPriority =  updatedBug.getPriority();
                 updatedBug.setTitle(request.getTitle());
@@ -85,5 +94,24 @@ public class BugService {
         Bug bug = bugRespository.findById(taskId).get();
         bugRespository.delete(bug);
         return ResponseEntity.ok("Bug deleted") ;
+    }
+
+    public ResponseEntity<Bug> reactById(Integer id ,Integer react) {
+      Bug bug =   bugRespository.findById(id).orElse(null);
+        if(bug == null) {
+            throw new ApiRequestException("bug not found");
+        }
+        if(react == null) {
+            throw new ApiRequestException("react not found");
+        }
+        Integer bugPriority =  bug.getPriority();
+        if(react == 0) {
+            bug.setPriority(bugPriority -1);
+        }
+        else if(react == 1) {
+            bug.setPriority(bugPriority +1);
+        }
+        bugRespository.save(bug);
+        return ResponseEntity.ok(bug);
     }
 }

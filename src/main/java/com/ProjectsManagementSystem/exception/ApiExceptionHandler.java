@@ -19,4 +19,24 @@ public class ApiExceptionHandler {
                 LocalDateTime.now());
         return new ResponseEntity<>(apiException,badRequest);
     }
+
+    @ExceptionHandler(value = {ApiDuplicatedLoginException.class})
+    public ResponseEntity<Object> handleApiDuplicatedLoginException(ApiDuplicatedLoginException e){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                badRequest,
+                LocalDateTime.now());
+        return new ResponseEntity<>(apiException,badRequest);
+    }
+
+    @ExceptionHandler(value = {ApiInvalidTokenException.class})
+    public ResponseEntity<Object> handleApiInvalidTokenException(ApiInvalidTokenException e){
+        HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                unauthorized,
+                LocalDateTime.now());
+        return new ResponseEntity<>(apiException,unauthorized);
+    }
 }

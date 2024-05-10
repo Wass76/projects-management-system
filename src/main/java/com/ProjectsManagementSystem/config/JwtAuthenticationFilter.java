@@ -1,5 +1,8 @@
 package com.ProjectsManagementSystem.config;
 
+import com.ProjectsManagementSystem.exception.ApiInvalidTokenException;
+import com.ProjectsManagementSystem.user.Token;
+import com.ProjectsManagementSystem.user.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +26,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService ;
 
     private final UserDetailsService userDetailsService; // final
+    private final TokenRepository tokenRepository;
+
     @Override
     protected void doFilterInternal(
            @NonNull HttpServletRequest request,
@@ -40,7 +45,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userEmail = jwtService.extractUsername(jwt); //todo extract the userEmail from JWT token
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if(jwtService.isTokenValid(jwt,userDetails)){
+//            var isTokenValid = tokenRepository.findByToken(jwt);
+            var isTokenValid = tokenRepository.findByToken(jwt)
+                    .map(t -> !t.getIsExpired() && !t.getIsRevoked())
+                    .orElse(false);
+            if(jwtService.isTokenValid(jwt,userDetails) && isTokenValid){
                 UsernamePasswordAuthenticationToken authToken =  new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
