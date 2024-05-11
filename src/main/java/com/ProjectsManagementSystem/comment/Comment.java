@@ -1,11 +1,12 @@
-package com.ProjectsManagementSystem.task;
+package com.ProjectsManagementSystem.comment;
 
-import com.ProjectsManagementSystem.project.Project;
-import com.ProjectsManagementSystem.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ProjectsManagementSystem.bug.Bug;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,31 +15,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class Comment {
+
     @Id
     @SequenceGenerator(
-            name = "task_id",
-            sequenceName = "task_id",
+            name = "comment_id",
+            sequenceName = "comment_id",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-    generator = "task_id")
-    private Integer id;
-    private String title;
-    private String description;
-    private TaskStatus status;
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "comment_id"
+    )
+    private int id;
+    private String comment;
+    private Integer priority;
+    private String author;
 
-
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "project_id" , nullable = false)
-    private Project project;
+    @JoinColumn(name = "bug_id" , nullable = false)
+    private Bug bug;
 
     @CreatedDate
     @Column(
@@ -59,8 +61,8 @@ public class Task {
     private Integer createdBy;
 
     @LastModifiedBy
-    @Column(insertable = false
-    )
+    @Column(insertable = false)
     private Integer lastModifiedBy;
-}
 
+
+}

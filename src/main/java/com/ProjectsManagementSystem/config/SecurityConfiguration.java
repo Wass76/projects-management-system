@@ -101,6 +101,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("api/v1/projects/**").authenticated()
                                 .requestMatchers("api/v1/tasks/**").authenticated()
                                 .requestMatchers("api/v1/bugs/**").authenticated()
+                                .requestMatchers("api/v1/comments/**").authenticated()
                                 .requestMatchers("api/v1/auth/logout").authenticated()
 
                       //  req.requestMatchers("/api/v1/**").authenticated()

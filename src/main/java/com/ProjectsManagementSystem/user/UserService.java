@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -55,12 +56,17 @@ public class UserService {
                 .expiryDate(expiryTime)
                 .build();
 
+        passwordResetTokenRepository.save(passwordResetToken);
+
         MailStructure mailStructure = MailStructure.builder()
                         .subject("Reset password code")
                                 .message("Your restoration code for reset your account's password is:" + token
-                                +"\n" + "you should now that this restoration code is valid just for 30 minutes")
+                                +"\n" + "you should know that this restoration code is valid just for 30 minutes")
                 .build();
-        mailService.sendEmail(email,mailStructure);
+//        mailService.sendEmail(email,mailStructure);
+        System.out.println(mailStructure.getMessage());
+        Logger logger = Logger.getLogger(UserService.class.getName() + mailStructure.getSubject());
+
     }
 
     public String generateResetToken(){

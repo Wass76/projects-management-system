@@ -4,7 +4,7 @@ server:
       enabled: true
 
 #server:
-#  port: 3010
+  port: 3010
 
 spring:
   application:
