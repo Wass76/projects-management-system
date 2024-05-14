@@ -21,4 +21,5 @@ public interface TokenRepository extends JpaRepository<Token, Integer> {
             "AND t.isRevoked = false")  // Not revoked
     public Token findByUserId(@Param("userId") Integer userId);
 
+    public  List<Token>findTokensByUserId(Integer id);
 }
