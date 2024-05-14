@@ -33,7 +33,7 @@ public class TaskController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<TaskResponse>> getAllTasks() {
 //        return ResponseEntity.build( taskService.getAllTasks());
         return taskService.getAllTasks();
     }
@@ -52,7 +52,7 @@ public class TaskController {
             }
     )
     @GetMapping("{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Integer id) {
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Integer id) {
         if(id == null || id<=0){
             throw new ApiRequestException("Invalid Id");
 //            return ResponseEntity.badRequest().body("Invalid Id");
@@ -83,6 +83,32 @@ public class TaskController {
         return ResponseEntity.ok(taskService.createTask(request));
     }
 
+
+    @Operation(
+            description = "This endpoint build to get tasks by project id",
+            summary =  "Get tasks for one project",
+            responses ={
+                    @ApiResponse(
+                            description = "Get task by projectId done successfully",
+                            responseCode = "200"
+                    )
+
+//                    @ApiResponse(
+//                            description = "there is no projects yet",
+//                            responseCode = "203"
+//                    ),
+//                    @ApiResponse(
+//                            description = "unauthorized",
+//                            responseCode = "403"
+//                    )
+            }
+    )
+
+    @GetMapping("/tasks-by-project/{project_id}")
+    public ResponseEntity<List<Task>> getTasksByProject(@PathVariable Integer project_id) {
+        return ResponseEntity.ok(taskService.getTasksByProjectId(project_id)) ;
+    }
+
     @Operation(
             description = "This endpoint build to edit task's status by one user",
             summary =  "Edit task status",
@@ -103,10 +129,6 @@ public class TaskController {
             }
     )
 
-    @GetMapping("/tasks-by-project/{project_id}")
-    public ResponseEntity<List<Task>> getTasksByProject(@PathVariable Integer project_id) {
-        return ResponseEntity.ok(taskService.getTasksByProjectId(project_id)) ;
-    }
     @PutMapping("{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Integer id, TaskRequest request) {
         return taskService.updateTask(id, request);
@@ -132,7 +154,7 @@ public class TaskController {
             }
     )
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Integer id) {
         taskService.deleteTaskById(id);
         return ResponseEntity.ok("Task deleted successfully");

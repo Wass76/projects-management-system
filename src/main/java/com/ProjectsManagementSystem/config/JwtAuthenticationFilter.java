@@ -3,10 +3,12 @@ package com.ProjectsManagementSystem.config;
 import com.ProjectsManagementSystem.exception.ApiInvalidTokenException;
 import com.ProjectsManagementSystem.user.Token;
 import com.ProjectsManagementSystem.user.TokenRepository;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,27 +20,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
+//@Transactional
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService ;
+    private final JwtService jwtService;
 
     private final UserDetailsService userDetailsService; // final
     private final TokenRepository tokenRepository;
+    Logger log = Logger.getLogger(JwtAuthenticationFilter.class.getName());
 
     @Override
     protected void doFilterInternal(
-           @NonNull HttpServletRequest request,
-           @NonNull HttpServletResponse response,
-           @NonNull FilterChain filterChain
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request,response);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
             return;
         }
         jwt = authHeader.substring(7);
@@ -49,8 +56,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.getIsExpired() && !t.getIsRevoked())
                     .orElse(false);
-            if(jwtService.isTokenValid(jwt,userDetails) && isTokenValid){
-                UsernamePasswordAuthenticationToken authToken =  new UsernamePasswordAuthenticationToken(
+            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()
@@ -61,6 +68,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

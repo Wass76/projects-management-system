@@ -61,11 +61,11 @@ public class AuthenticationService {
                     throw new ApiRequestException("User not found");
                 }
 
-                if(tokenRepository
-                        .findByUserId(user.getId()) != null){
-//                    return new AuthenticationResponse("you have already logged in");
-                    throw new ApiDuplicatedLoginException("you have already logged in");
-                }
+//                if(tokenRepository
+//                        .findByUserId(user.getId()) != null){
+////                    return new AuthenticationResponse("you have already logged in");
+//                    throw new ApiDuplicatedLoginException("you have already logged in");
+//                }
 
       var jwtToken = jwtService.generateToken(user);
         Token newToken = Token.builder()
