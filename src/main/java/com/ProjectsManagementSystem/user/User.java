@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -23,6 +24,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Table(name = "_user")
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
     @Id
@@ -72,16 +74,16 @@ public class User implements UserDetails {
     @Column(insertable = false)
     private LocalDateTime lastModified;
 
-    @CreatedBy
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private Integer createdBy;
+//    @CreatedBy
+//    @Column(
+//            nullable = false,
+//            updatable = false
+//    )
+//    private Integer createdBy;
 
-    @LastModifiedBy
-    @Column(insertable = false)
-    private Integer lastModifiedBy;
+//    @LastModifiedBy
+//    @Column(insertable = false)
+//    private Integer lastModifiedBy;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
