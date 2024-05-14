@@ -14,4 +14,6 @@ public interface ProjectMembershipRepository extends JpaRepository<ProjectMember
     public List<ProjectMembership> getProjectMembershipsByUserId(@Param("userId") Integer userId);
 
     public List<ProjectMembership> findByProjectId(Integer projectId);
+
+
 }

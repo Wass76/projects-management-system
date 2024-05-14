@@ -1,6 +1,7 @@
 package com.ProjectsManagementSystem.comment;
 
 import com.ProjectsManagementSystem.bug.Bug;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -35,9 +36,10 @@ public class Comment {
     )
     private int id;
     private String comment;
-    private Integer priority;
+//    private Integer priority;
     private String author;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "bug_id" , nullable = false)
     private Bug bug;

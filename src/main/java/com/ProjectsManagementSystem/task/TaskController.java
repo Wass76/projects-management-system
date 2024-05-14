@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -71,17 +73,30 @@ public class TaskController {
             }
     )
     @PostMapping
-    public ResponseEntity<TaskResponse> addTask(TaskRequest request) {
-//        try {
-//            Task task = taskService.createTask(request);
-//            return ResponseEntity.ok(task);
-//
+//    public ResponseEntity< List<TaskResponse>> addTask( List<TaskRequest> request) {
+////        try {
+////            Task task = taskService.createTask(request);
+////            return ResponseEntity.ok(task);
+////
+////        }
+////        catch (ApiRequestException e) {
+////            throw new ApiRequestException(e.getMessage());
+////        }
+//        List<TaskResponse> taskResponseList = new ArrayList<>();
+//        for (TaskRequest taskRequest : request) {
+//           taskResponseList.add(taskService.createTask(taskRequest));
 //        }
-//        catch (ApiRequestException e) {
-//            throw new ApiRequestException(e.getMessage());
-//        }
-        return ResponseEntity.ok(taskService.createTask(request));
+//        return ResponseEntity.ok(taskResponseList);
+//    }
+
+    public ResponseEntity<List<TaskResponse>> addTask(@RequestBody List<TaskRequest> request) {
+        List<TaskResponse> taskResponseList = new ArrayList<>();
+        for (TaskRequest taskRequest : request) {
+            taskResponseList.add(taskService.createTask(taskRequest));
+        }
+        return ResponseEntity.ok(taskResponseList);
     }
+
 
 
     @Operation(
@@ -105,8 +120,8 @@ public class TaskController {
     )
 
     @GetMapping("/tasks-by-project/{project_id}")
-    public ResponseEntity<List<Task>> getTasksByProject(@PathVariable Integer project_id) {
-        return ResponseEntity.ok(taskService.getTasksByProjectId(project_id)) ;
+    public ResponseEntity<List<TaskResponse>> getTasksByProject(@PathVariable Integer project_id) {
+        return taskService.getTasksByProjectId(project_id);
     }
 
     @Operation(
@@ -130,8 +145,8 @@ public class TaskController {
     )
 
     @PutMapping("{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Integer id, TaskRequest request) {
-        return taskService.updateTask(id, request);
+    public ResponseEntity<TaskResponse> updateTask(@PathVariable Integer id, TaskRequest request , Principal principal) {
+        return taskService.updateTask(id, request ,principal);
     }
 
     @Operation(

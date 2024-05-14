@@ -1,12 +1,16 @@
 package com.ProjectsManagementSystem.auth;
 
+import com.ProjectsManagementSystem.config.JwtService;
 import com.ProjectsManagementSystem.mail.MailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 
 @RestController
@@ -17,6 +21,7 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final MailService mailService;
+    private final JwtService jwtService;
 
 
     @Operation
@@ -50,6 +55,11 @@ public class AuthenticationController {
         return authenticationService.logout(principal
         );
     }
-
+@PostMapping("/refresh_token")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+    authenticationService.refreshToken(request,response);
+}
 
 }

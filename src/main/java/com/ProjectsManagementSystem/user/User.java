@@ -60,7 +60,7 @@ public class User implements UserDetails {
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Collection<Project> projects = new ArrayList<>();
-
+/*
     @CreatedDate
     @Column(
             nullable = false,
@@ -82,7 +82,7 @@ public class User implements UserDetails {
     @LastModifiedBy
     @Column(insertable = false)
     private Integer lastModifiedBy;
-
+*/
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();

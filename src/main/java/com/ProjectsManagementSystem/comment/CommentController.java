@@ -31,6 +31,21 @@ public class CommentController {
         return commentService.addComment(request,principal);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Comment> getComment(@PathVariable("id")Integer id) {
+        return commentService.getCommentById(id);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable("id") Integer id, @RequestBody CommentRequest request , Principal principal) {
+        return commentService.updateComment(id,request,principal);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable("id") Integer id) {
+        return commentService.deleteComment(id);
+    }
+
 
 
 

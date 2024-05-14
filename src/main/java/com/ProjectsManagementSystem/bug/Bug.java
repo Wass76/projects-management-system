@@ -1,5 +1,6 @@
 package com.ProjectsManagementSystem.bug;
 
+import com.ProjectsManagementSystem.comment.Comment;
 import com.ProjectsManagementSystem.task.Task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -43,6 +45,9 @@ public class Bug {
     @NotNull
     @JoinColumn(name = "task_id", nullable = false ,updatable = false)
     private Task task;
+
+    @OneToMany(mappedBy = "bug",fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
 
     @CreatedDate
