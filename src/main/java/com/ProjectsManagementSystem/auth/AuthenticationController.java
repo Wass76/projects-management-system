@@ -1,8 +1,12 @@
 package com.ProjectsManagementSystem.auth;
 
 import com.ProjectsManagementSystem.config.JwtService;
+import com.ProjectsManagementSystem.exception.ApiDuplicatedLoginException;
 import com.ProjectsManagementSystem.mail.MailService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +28,26 @@ public class AuthenticationController {
     private final JwtService jwtService;
 
 
-    @Operation
+    @Operation(
+            description = "This endpoint build to register a new user account",
+            summary = "Register an new account",
+            responses = {
+                    @ApiResponse(
+                            description = "register done successfully",
+                            responseCode = "200",
+                            content = @Content(
+                                    schema = @Schema(implementation = AuthenticationResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            description = "You can't register because email already in use in this system, try with another email",
+                            responseCode = "400",
+                            content = @Content(
+                                    schema = @Schema(implementation = ApiDuplicatedLoginException.class)
+                            )
+                    )
+            }
+    )
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -40,6 +63,26 @@ public class AuthenticationController {
        return ResponseEntity.ok(authenticationService.register(request));
     }
 
+    @Operation(
+            description = "This endpoint build to login to user account",
+            summary = "Login to my account",
+            responses = {
+                    @ApiResponse(
+                            description = "Logging in done successfully",
+                            responseCode = "200",
+                            content = @Content(
+                                    schema = @Schema(implementation = AuthenticationResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            description = "You can't login because you already login, make logout operation firstly and try again",
+                            responseCode = "400",
+                            content = @Content(
+                                    schema = @Schema(implementation = ApiDuplicatedLoginException.class)
+                            )
+                    )
+            }
+    )
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request

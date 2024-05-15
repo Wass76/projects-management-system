@@ -2,7 +2,6 @@ package com.ProjectsManagementSystem.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 @RequiredArgsConstructor
 public enum Permission {
 

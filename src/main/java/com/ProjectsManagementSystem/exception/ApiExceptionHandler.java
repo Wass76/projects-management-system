@@ -39,4 +39,14 @@ public class ApiExceptionHandler {
                 LocalDateTime.now());
         return new ResponseEntity<>(apiException,unauthorized);
     }
+    @ExceptionHandler(value = {ApiUserEmailException.class})
+    public ResponseEntity<Object> ApiUserEmailException(ApiUserEmailException e){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                badRequest,
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(apiException,badRequest);
+    }
 }

@@ -96,7 +96,7 @@ public class ProjectService {
 //        if(project.isPresent()){
             project.get().setName(projectRequest.getProjectName());
             project.get().setDescription(projectRequest.getProjectDescription());
-            project.get().setStatus(projectRequest.getProjectStatus());
+            project.get().setStatus(ProjectStatus.valueOf(projectRequest.getProjectStatus()));
             projectRepository.save(project.get());
 //        }
 
@@ -147,7 +147,7 @@ public class ProjectService {
     public void removeUserFromProject(Integer id, Integer userId) {
         Optional<Project> project = projectRepository.findById(id);
         if(project.isPresent()){
-            User user = userRepository.getReferenceById(userId);
+            User user = userRepository.findById(userId).orElse(null);
             if(user !=null){
                 ProjectMembership projectMembership =  projectMembershipRepository
                         .getProjectMemberships(project.get().getId() , userId);

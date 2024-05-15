@@ -3,6 +3,7 @@ package com.ProjectsManagementSystem.auth;
 import com.ProjectsManagementSystem.config.JwtService;
 import com.ProjectsManagementSystem.exception.ApiDuplicatedLoginException;
 import com.ProjectsManagementSystem.exception.ApiRequestException;
+import com.ProjectsManagementSystem.exception.ApiUserEmailException;
 import com.ProjectsManagementSystem.user.Token;
 import com.ProjectsManagementSystem.user.TokenRepository;
 import com.ProjectsManagementSystem.user.User;
@@ -34,6 +35,10 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        if(userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new ApiUserEmailException("Email already in use");
+        }
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

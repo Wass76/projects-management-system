@@ -6,5 +6,5 @@ import lombok.Data;
 public class ProjectRequest {
     private String projectName;
     private String projectDescription;
-    private ProjectStatus projectStatus;
+    private String projectStatus;
 }
