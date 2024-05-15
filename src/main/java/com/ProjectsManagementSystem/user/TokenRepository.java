@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface TokenRepository extends JpaRepository<Token, Integer> {
     @Query("SELECT t from Token t" +
             " where t.token = :token " +
-            "AND t.isRevoked = false")
+            "AND t.isRevoked = false " +
+            "AND t.isExpired = false ")
     public Optional<Token> findByToken(@Param("token") String token);
 
 
