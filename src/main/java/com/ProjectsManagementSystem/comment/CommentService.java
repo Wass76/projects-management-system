@@ -83,6 +83,7 @@ public class CommentService {
         }
         Comment comment = commentRepository.getReferenceById(id);
         comment.setComment(request.getComment());
+        comment.setComment(request.getComment());
         commentRepository.save(comment);
 
         return ResponseEntity.ok(comment);
@@ -91,7 +92,10 @@ public class CommentService {
         Optional<Comment> comment = commentRepository.findById(id);
         if (comment.isPresent()) {
             commentRepository.delete(comment.get());
+            return ResponseEntity.ok("Comment deleted successfully");
         }
-        return ResponseEntity.ok("Comment deleted successfully");
+        else {
+            throw new ApiRequestException("Comment not found");
+        }
     }
 }

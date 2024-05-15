@@ -22,7 +22,7 @@ public class TaskController {
 
     @Operation(
             description = "This endpoint build to get all tasks which is in our system",
-            summary = "get all tasks",
+            summary = "Get all tasks",
             responses = {
                     @ApiResponse(
                             description = "get all tasks done successfully",
@@ -41,7 +41,7 @@ public class TaskController {
     }
     @Operation(
             description = "This endpoint build to get task by id which is in our system",
-            summary = "Get all tasks",
+            summary = "Get task by id",
             responses = {
                     @ApiResponse(
                             description = "get task by id done successfully",
@@ -73,22 +73,6 @@ public class TaskController {
             }
     )
     @PostMapping
-//    public ResponseEntity< List<TaskResponse>> addTask( List<TaskRequest> request) {
-////        try {
-////            Task task = taskService.createTask(request);
-////            return ResponseEntity.ok(task);
-////
-////        }
-////        catch (ApiRequestException e) {
-////            throw new ApiRequestException(e.getMessage());
-////        }
-//        List<TaskResponse> taskResponseList = new ArrayList<>();
-//        for (TaskRequest taskRequest : request) {
-//           taskResponseList.add(taskService.createTask(taskRequest));
-//        }
-//        return ResponseEntity.ok(taskResponseList);
-//    }
-
     public ResponseEntity<List<TaskResponse>> addTask(@RequestBody List<TaskRequest> request) {
         List<TaskResponse> taskResponseList = new ArrayList<>();
         for (TaskRequest taskRequest : request) {
@@ -96,8 +80,6 @@ public class TaskController {
         }
         return ResponseEntity.ok(taskResponseList);
     }
-
-
 
     @Operation(
             description = "This endpoint build to get tasks by project id",

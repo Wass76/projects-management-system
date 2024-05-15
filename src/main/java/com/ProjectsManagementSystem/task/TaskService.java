@@ -67,7 +67,7 @@ public class TaskService {
 //        return taskRepository.findById(id).get();
     }
     public TaskResponse createTask(TaskRequest request) {
-        Project project = projectRepository.getReferenceById(request.getProject_id());
+        Project project = projectRepository.findById(request.getProject_id()).orElse(null);
 //        User user = userRepository.getReferenceById(request.getUser_id());
 
         if (project == null) {

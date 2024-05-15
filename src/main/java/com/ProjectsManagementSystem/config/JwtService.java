@@ -29,8 +29,8 @@ public class JwtService {
 
     private static final String SECRET_KEY = "7402bb3c24c35f15d1a7f1422078d9c1a4d9ebf1a276ff01ac84e6407625532e";
     private final TokenRepository tokenRepository;
-    private long AccessTokenExpiration=86400000; //a day
-    private long RefreshTokenExpiration=604800000; //7 days
+    private long AccessTokenExpiration=86400000*7; //a day
+    private long RefreshTokenExpiration=604800000*4; //7 days
 
     public JwtService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;

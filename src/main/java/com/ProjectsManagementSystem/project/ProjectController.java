@@ -163,7 +163,7 @@ private final ProjectService projectService;
         return ResponseEntity.ok("success");
     }
 //
-    @DeleteMapping("{projectId}/deleting-from-project")
+    @DeleteMapping("{projectId}/deleting-user-from-project")
     public ResponseEntity<String> deleteUserFromProject(@PathVariable Integer projectId) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         User user = (User) securityContext.getAuthentication().getPrincipal();
