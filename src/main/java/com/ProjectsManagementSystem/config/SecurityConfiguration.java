@@ -65,26 +65,6 @@ public class SecurityConfiguration {
             @Override
             public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
                 // Implement your logout logic here (e.g., invalidate session, clear cookies)
-//                HttpSession session = request.getSession(false);
-//                if(session != null){
-//                    session.invalidate();
-//                }
-//                if(authentication instanceof UsernamePasswordAuthenticationToken token) {
-//                    var user = (User)token.getPrincipal();
-//                    Token myToken = tokenRepository.findByUserId(user.getId());
-////                    System.out.println("myToken: " + myToken);
-//                    if(myToken != null) {
-//                        myToken.setIsRevoked(true);
-//                        tokenRepository.save(myToken);
-//                    }
-//                    response.setStatus(HttpServletResponse.SC_OK);
-//                    try {
-//                        response.getWriter().write("{\"message\": \"Logout successful\"}"); //
-////                        response.getWriter().flush();
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
             }
         };
     }

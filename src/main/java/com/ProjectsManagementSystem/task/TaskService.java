@@ -69,7 +69,6 @@ public class TaskService {
     public TaskResponse createTask(TaskRequest request) {
         Project project = projectRepository.findById(request.getProject_id()).orElse(null);
 //        User user = userRepository.getReferenceById(request.getUser_id());
-
         if (project == null) {
             throw new ApiRequestException("project not found");
         }
