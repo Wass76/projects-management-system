@@ -1,0 +1,44 @@
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+
+#server:
+#  port: 8000
+
+spring:
+  application:
+    name: ProjectsManagementSystem
+  datasource:
+    url: jdbc:postgresql://dpg-coq9m1cf7o1s73edl940-a.oregon-postgres.render.com/projects_management_sysyem_stage_1
+    username: wassem
+    password: nBJfjmaNObLlPxx6nbefvuw1r1xBclOl
+#    url: jdbc:postgresql://localhost:5435/projects_management_system
+#    username: Wassem
+#    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc.lob.non_contextual_creation: true
+    show-sql: true
+#    jackson:
+#      serialization:
+#        fail-on-empty-beans: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wasee.tenbakji@gmail.com  # Replace with your actual Gmail address
+    password: uphkmwhxuoapuuwi  # Replace with your actual Gmail password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true  # This is the correct property name for enabling TLS
