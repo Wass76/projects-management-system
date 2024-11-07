@@ -1,8 +1,13 @@
-#FROM maven:3-openjdk-17 AS build
-#COPY . .
-#RUN  mvn clean package -DskipTests
+
+FROM maven:3-openjdk-17 AS build
+COPY . .
+RUN  mvn clean package -DskipTests
+
 
 FROM openjdk:17-jdk-slim
-COPY --from=build /target/ProjectsManagementSystem-0.0.1-SNAPSHOT.jar ProjectsManagementSystem.jar
+
+ENV JAVA_HOME=/usr/local/openjdk-21
+WORKDIR /app
+COPY target/oscam-0.0.1-SNAPSHOT.jar /app/oscam.jar
 EXPOSE 3011
-ENTRYPOINT ["java","-jar","ProjectsManagementSystem.jar"]
+ENTRYPOINT ["java","-jar","oscam.jar"]
