@@ -10,9 +10,9 @@ spring:
   application:
     name: ProjectsManagementSystem
   datasource:
-    url: jdbc:postgresql://dpg-cptiuh9u0jms73e9uk30-a.oregon-postgres.render.com/projects_management_system
-    username: wassem
-    password: sYfjEv9b42noHWvAn7ROcf8kZkpa73PM
+    url: jdbc:postgresql://oscam_dp:5432/oscam
+    username: postgres
+    password: Wassem7676.tn
 #    url: jdbc:postgresql://localhost:5435/projects_management_system
 #    username: Wassem
 #    password: password

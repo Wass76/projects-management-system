@@ -21,7 +21,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
-    private final MailService mailService;
 
     public void changePassword(
             ChangePasswordRequest request, Principal connectedUser){

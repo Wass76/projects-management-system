@@ -1,23 +1,36 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:latest
-    container_name: projects-management-system
+  Oscam-backend:
+    build: .
+    image: oscam-backend
+    container_name: Oscam-backend
+    ports:
+      - "3011:3011"
     environment:
-        POSTGRES_USER: Wassem
-        POSTGRES_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:postgresql://oscam_dp:5432/oscam
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Wassem7676.tn
+      SPRING_DATASOURCE_DATABASE: oscam
+    networks:
+      - osacam_net
+
+  Oscam_dp:
+    image: postgres:latest
+    container_name: Oscam_db
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: Wassem7676.tn
         PGDATA: /var/lib/postgresql/data
 #    volumes:
 #        - postgres-data:/var/lib/postgresql/data
     ports:
         - "5435:5432"
     networks:
-      - db
+      - osacam_net
     restart: unless-stopped
 
 networks:
-  db:
+  osacam_net:
     driver: bridge
-#volumes:
 #  postgres-data:

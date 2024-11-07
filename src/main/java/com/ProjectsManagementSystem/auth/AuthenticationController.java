@@ -2,7 +2,6 @@ package com.ProjectsManagementSystem.auth;
 
 import com.ProjectsManagementSystem.config.JwtService;
 import com.ProjectsManagementSystem.exception.ApiDuplicatedLoginException;
-import com.ProjectsManagementSystem.mail.MailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +23,6 @@ import java.security.Principal;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-    private final MailService mailService;
     private final JwtService jwtService;
 
 

@@ -1,6 +1,5 @@
 package com.ProjectsManagementSystem.user;
 
-import com.ProjectsManagementSystem.mail.MailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
