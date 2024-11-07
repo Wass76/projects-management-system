@@ -29,11 +29,11 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 {
                         @Server(
                                 description = "Local ENV",
-                                url = "http://localhost:8000"
+                                url = "http://localhost:3011"
                         ),
                         @Server(
                                 description = "Prod ENV",
-                                url = "https://projects-management-system.onrender.com"
+                                url = "http://199.192.19.220:3011"
                         )
                 },
         security = @SecurityRequirement(name = "BearerAuth")

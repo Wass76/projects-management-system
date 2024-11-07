@@ -1,7 +1,5 @@
 server:
-  tomcat:
-    accesslog:
-      enabled: true
+  port: 3011
 
 #server:
 #  port: 8000
